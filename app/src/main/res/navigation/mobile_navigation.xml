@@ -25,7 +25,12 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/navigation_planos"
-        android:name="ipca.study.gymrats.ui.BlankFragment"
+        android:name="ipca.study.gymrats.ui.PlanosFragment"
         android:label="Planos"
         tools:layout="@layout/fragment_planos" />
+    <fragment
+        android:id="@+id/navigation_calendar"
+        android:name="ipca.study.gymrats.ui.CalendarFragment"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_calendar" />
 </navigation>
