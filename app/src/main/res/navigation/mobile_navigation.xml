@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/navigation_planos"
         android:name="ipca.study.gymrats.ui.PlanosFragment"
-        android:label="Planos"
+        android:label="Plans"
         tools:layout="@layout/fragment_planos" />
     <fragment
         android:id="@+id/navigation_calendar"
