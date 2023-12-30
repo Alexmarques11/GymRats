@@ -38,6 +38,3 @@ interface PlanosDao {
     fun deleteAll()
 
 }
-
-
-

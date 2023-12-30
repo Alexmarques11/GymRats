@@ -11,7 +11,7 @@ import ipca.study.gymrats.R
 class AddPlanosActivity : AppCompatActivity() {
 
     private var position: Int = -1
-    private var data: Int = 0
+    private var timestamp: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,23 +22,23 @@ class AddPlanosActivity : AppCompatActivity() {
 
         intent.extras?.let {
             position = it.getInt(DATA_POSITION, -1)
-            data = it.getInt(DATA_DATE)
+            timestamp = it.getLong(DATA_DATE)
             val training = it.getString(DATA_TRAINING)
             trainingType.setText(training)
         }
 
         findViewById<Button>(R.id.buttonDone)?.setOnClickListener {
             val intent = Intent()
-            intent.putExtra("trainingType", trainingType.text.toString())
-            intent.putExtra("date", date.text.toString())
+            intent.putExtra(DATA_TRAINING, trainingType.text.toString())
+            intent.putExtra(DATA_DATE, timestamp)  // Usando timestamp em vez de uma string
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
     }
 
     companion object {
-        const val  DATA_TRAINING = "data_training"
-        const val  DATA_DATE  = "data_date"
+        const val DATA_TRAINING = "data_training"
+        const val DATA_DATE = "data_date"
         const val DATA_POSITION = "data_position"
     }
 }

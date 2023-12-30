@@ -28,6 +28,7 @@ class PlanosFragment : Fragment() {
         Planos("2","Costas", Date()),
         Planos("3","Pernas", Date())
     )
+
     val adapter = PlanosAdapter()
 
     val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -35,37 +36,32 @@ class PlanosFragment : Fragment() {
             val data = it.data
             data?.let {
                 val training = it.getStringExtra(AddPlanosActivity.DATA_TRAINING) ?: ""
-                val date = it.getStringExtra(AddPlanosActivity.DATA_DATE) ?: ""
+                val timestamp = it.getLongExtra(AddPlanosActivity.DATA_DATE, 0)
                 val position = it.getIntExtra(AddPlanosActivity.DATA_POSITION, -1)
 
                 if (position == -1) {
                     val newPlano = Planos(
                         UUID.randomUUID().toString(),
                         training,
-                        Date(date),
+                        if (timestamp != 0L) Date(timestamp) else Date(),
                         false
                     )
+
                     GlobalScope.launch(Dispatchers.IO) {
                         AppDatabase.getDatabase(requireContext())?.getPlanosDao()?.insert(newPlano)
                     }
-                    planos.add(newPlano)
-                    adapter.notifyDataSetChanged()
                 } else {
                     planos[position].trainingType = training
-                    planos[position].date = Date(date.toLong())
+                    planos[position].date = if (timestamp != 0L) Date(timestamp) else Date()
 
                     GlobalScope.launch(Dispatchers.IO) {
-                        AppDatabase.getDatabase(requireContext())?.getPlanosDao()
-                            ?.update(planos[position])
+                        val planosDao = AppDatabase.getDatabase(requireContext())?.getPlanosDao()
+                        planosDao?.update(planos[position])
                     }
-
-                    adapter.notifyDataSetChanged()
+                }
                 }
             }
         }
-    }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -117,7 +113,7 @@ class PlanosFragment : Fragment() {
             rootView.setOnClickListener {
                 val intent = Intent(requireActivity(), AddPlanosActivity::class.java)
                 intent.putExtra(AddPlanosActivity.DATA_TRAINING, planos[position].trainingType)
-                intent.putExtra(AddPlanosActivity.DATA_DATE, planos[position].date)
+                intent.putExtra(AddPlanosActivity.DATA_DATE, planos[position].date.time)
                 intent.putExtra(AddPlanosActivity.DATA_POSITION, position)
                 resultLauncher.launch(intent)
             }
@@ -125,5 +121,4 @@ class PlanosFragment : Fragment() {
             return rootView
         }
     }
-
 }
