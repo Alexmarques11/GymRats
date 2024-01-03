@@ -1,6 +1,5 @@
-package ipca.study.gymrats.ui
+package ipca.study.gymrats.ui.planos
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,57 +10,20 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ListView
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import ipca.study.gymrats.R
+import ipca.study.gymrats.repository.AppDatabase
+import ipca.study.gymrats.repository.Planos
 import ipca.study.gymrats.toShortDateTime
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.util.Date
-import java.util.UUID
 
 class PlanosFragment : Fragment() {
 
-    var planos = arrayListOf<Planos>(
-        Planos("1","Peito", Date()),
-        Planos("2","Costas", Date()),
-        Planos("3","Pernas", Date())
-    )
+    var planos :List<Planos> = arrayListOf<Planos>()
 
     val adapter = PlanosAdapter()
 
-    val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val data = it.data
-            data?.let {
-                val training = it.getStringExtra(AddPlanosActivity.DATA_TRAINING) ?: ""
-                val timestamp = it.getLongExtra(AddPlanosActivity.DATA_DATE, 0)
-                val position = it.getIntExtra(AddPlanosActivity.DATA_POSITION, -1)
 
-                if (position == -1) {
-                    val newPlano = Planos(
-                        UUID.randomUUID().toString(),
-                        training,
-                        if (timestamp != 0L) Date(timestamp) else Date(),
-                        false
-                    )
-
-                    GlobalScope.launch(Dispatchers.IO) {
-                        AppDatabase.getDatabase(requireContext())?.getPlanosDao()?.insert(newPlano)
-                    }
-                } else {
-                    planos[position].trainingType = training
-                    planos[position].date = if (timestamp != 0L) Date(timestamp) else Date()
-
-                    GlobalScope.launch(Dispatchers.IO) {
-                        val planosDao = AppDatabase.getDatabase(requireContext())?.getPlanosDao()
-                        planosDao?.update(planos[position])
-                    }
-                }
-                }
-            }
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,10 +36,20 @@ class PlanosFragment : Fragment() {
 
         rootView.findViewById<Button>(R.id.buttonDone).setOnClickListener {
             val intent = Intent(requireContext(), AddPlanosActivity::class.java)
-            resultLauncher.launch(intent)
+            startActivity(intent)
         }
 
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val planosDao = AppDatabase.getDatabase(requireContext())?.getPlanosDao()
+        planosDao?.getAll()?.observe(viewLifecycleOwner, Observer {
+            planos = it
+            adapter.notifyDataSetChanged()
+        })
     }
 
     inner class PlanosAdapter : BaseAdapter() {
@@ -105,17 +77,16 @@ class PlanosFragment : Fragment() {
             checkBox.setOnClickListener {
                 planos[position].isChecked = checkBox.isChecked
             }
-            GlobalScope.launch (Dispatchers.IO) {
-                AppDatabase.getDatabase(requireContext())?.getPlanosDao()
-                    ?.update(planos[position])
-            }
+
 
             rootView.setOnClickListener {
                 val intent = Intent(requireActivity(), AddPlanosActivity::class.java)
                 intent.putExtra(AddPlanosActivity.DATA_TRAINING, planos[position].trainingType)
                 intent.putExtra(AddPlanosActivity.DATA_DATE, planos[position].date.time)
-                intent.putExtra(AddPlanosActivity.DATA_POSITION, position)
-                resultLauncher.launch(intent)
+
+                intent.putExtra(AddPlanosActivity.DATA_PLAN_ID,  planos[position].id)
+
+                startActivity(intent)
             }
 
             return rootView

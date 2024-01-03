@@ -1,4 +1,4 @@
-package ipca.study.gymrats.ui
+package ipca.study.gymrats.repository
 
 import android.content.Context
 import androidx.room.Database

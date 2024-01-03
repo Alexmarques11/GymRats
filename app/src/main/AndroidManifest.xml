@@ -25,7 +25,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".ui.AddPlanosActivity"/>
+        <activity android:name=".ui.planos.AddPlanosActivity"/>
     </application>
 
 </manifest>

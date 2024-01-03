@@ -1,10 +1,11 @@
-package ipca.study.gymrats.ui
+package ipca.study.gymrats.repository
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Entity
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Update
@@ -25,7 +26,7 @@ interface PlanosDao {
     @Query("SELECT * FROM Planos")
     fun getAll() : LiveData<List<Planos>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(plano: Planos)
 
     @Update

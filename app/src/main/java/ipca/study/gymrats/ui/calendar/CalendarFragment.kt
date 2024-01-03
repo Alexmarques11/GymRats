@@ -1,4 +1,4 @@
-    package ipca.study.gymrats.ui
+    package ipca.study.gymrats.ui.calendar
 
     import android.os.Bundle
     import androidx.fragment.app.Fragment

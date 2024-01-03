@@ -1,4 +1,4 @@
-package ipca.study.gymrats.ui
+package ipca.study.gymrats.repository
 
 import androidx.room.TypeConverter
 import java.util.Date
