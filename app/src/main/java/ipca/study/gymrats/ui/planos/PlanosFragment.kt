@@ -47,7 +47,7 @@ class PlanosFragment : Fragment() {
 
         val planosDao = AppDatabase.getDatabase(requireContext())?.getPlanosDao()
         planosDao?.getAll()?.observe(viewLifecycleOwner, Observer {
-            planos = it
+            planos = it.sortedBy { plano -> plano.date }
             adapter.notifyDataSetChanged()
         })
     }
