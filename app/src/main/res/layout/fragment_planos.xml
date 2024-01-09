@@ -14,8 +14,9 @@
         android:layout_height="60dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="50dp"
-        android:backgroundTint="#DCC1C1"
+        android:backgroundTint="#ffff"
         android:text="Add Plan"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

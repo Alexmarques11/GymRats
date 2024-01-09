@@ -13,10 +13,10 @@
         />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="ipca.study.gymrats.ui.dashboard.DashboardFragment"
+        android:id="@+id/navigation_profile"
+        android:name="ipca.study.gymrats.ui.profile.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/navigation_notifications"
