@@ -13,6 +13,7 @@
         android:layout_height="326dp"
         android:dateTextAppearance="@style/CalenderViewDateCustomText"
         android:theme="@style/CalenderViewCustom"
+        android:background="#72091E28"
         android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
 
     <androidx.cardview.widget.CardView
@@ -21,9 +22,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_weight="0.2"
-        app:cardBackgroundColor="#99000000">
+        app:cardBackgroundColor="#72053951">
 
         <ListView
             android:id="@+id/listViewCalendar"
