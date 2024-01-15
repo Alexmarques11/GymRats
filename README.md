@@ -4,6 +4,14 @@
 No âmbito desta Unidade Curricular de Desenvolvimento de Jogos para Plataformas Móveis foi apresentada uma proposta de trabalho que visava a criação e o desenvolvimento de um jogo ou aplicação. Para tal, teríamos de utilizar o Android Studio e a linguagem de programação Kotlin na criação da nossa resposta, também como a ferramenta FireBase, que nos permite guardar os dados do jogo ou aplicação numa Cloud.
 Em resposta a esta proposta de trabalho, decidimos criar a GymRats, uma aplicação destinada a facilitar a organização e o progresso de todos aqueles que procuram melhorarem-se a si mesmos através da prática de musculação em ginásios.
 
+## Membros
+
+### Esta aplicação android foi criada por:
+
+### Alexandre Marques a25968
+### João Pereira a24254
+### Gonçalo Gaspar a26531
+
 ## Desenvolvimento
 No desenvolvimento da GymRats estabelecemos várias activities e fragments essenciais para a construção da resposta que pretendíamos apresentar. Estas activities e fragments estão interligados no código da aplicação de modo a proporcionar a experiência que pretendemos na navegação da aplicação. Algumas das activities e fragments que desenvolvemos estão apresentadas a seguir:
 
